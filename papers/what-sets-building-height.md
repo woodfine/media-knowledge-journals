@@ -401,7 +401,7 @@ Prepared by Woodfine Management Corp.
 
 ## How this paper was produced
 
-AI assistance was used in preparing and revising this paper.
+This paper is grounded in the preparing staff's own development and operating work, and in their standing engagement with the designers, software engineers, architects, engineers, and legal and accounting advisers the business works with. It was drafted and edited with AI assistance under editorial direction, and the analysis and conclusions are the author's own.
 
 ## Disclosures
 
@@ -456,4 +456,4 @@ to weigh our position against the mainstream view should read them rather than o
 characterisation of them. No independent party has reviewed the geometry described here,
 verified the conversion guide, or confirmed the claims made for it.
 
-Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.
+MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
