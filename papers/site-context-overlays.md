@@ -1,306 +1,393 @@
 ---
 schema: journal-v2
 slug: site-context-overlays
-title: "Separating a Building Design From the Rules That Govern Where It Sits"
-subtitle: "A data architecture that lets one reusable design carry a different, automatically computed compliance status in every jurisdiction it is proposed"
+title: "Site Context Overlays"
+subtitle: "Holding each jurisdiction's local rules as swappable data laid over one unchanged design"
 site: bim.woodfinegroup.com
-imprint: WCP-2026-06
-thesis: "Building-code and site-environmental data are conventionally authored as a one-off prose report tied to a single project; separating the reusable design from the place-specific rules that govern it, and computing compliance as a derived result rather than authoring it as a verdict, lets the same design travel across jurisdictions without being re-authored or re-verified from scratch each time."
+imprint: WCP-010
+thesis: "Local compliance should be a separate layer of data laid over a jurisdiction-agnostic design, never authored back into it, so a new market is a data question rather than a redesign."
 abstract: |
-  An architect who has designed a compliant stairwell or a well-configured office on one
-  project effectively starts from a blank sheet on the next, even in the same jurisdiction and
-  even for the same kind of space, because the code-compliance conclusion was never recorded
-  as reusable data — it was written up as a prose report tied to that one project. We describe
-  an architecture that keeps three things structurally separate: a reusable functional-space
-  design that is jurisdiction-agnostic by construction; a place-specific overlay holding the
-  regulatory rules and environmental facts that apply at a given location; and a compliance
-  result, which is always computed from the pairing of the two and never hand-authored or
-  stored as a standalone verdict. Under this architecture, registering a newly-supported
-  jurisdiction requires exactly one new overlay record and zero edits to any existing design.
-  We specify a closed, four-category schema organizing the kinds of place-specific data a
-  design actually needs — legal requirements, hazard and structural loads, long-run climate
-  averages, and site-specific ground conditions — and a self-hosted model that lets a
-  practitioner build and keep a private, portable library of reusable designs across an entire
-  career without depending on a centrally hosted account system. We ground our internal
-  terminology directly in the published open building-data standard's own existing
-  distinction between a physical building element and a volume of space, correcting an
-  earlier internal description that had incorrectly treated the two as the same kind of
-  thing. The architecture is specified and partially implemented; a full-scale usability test
-  against a practitioner's real, career-length design library has not yet been run.
+  Our thesis is that compliance with a particular jurisdiction's rules should be computed
+  as a separate, swappable layer of data laid over a design that is itself
+  jurisdiction-agnostic — and never written back into the design. Opening in a new market
+  should mean adding a record, not redrawing a building. The mechanism is a per-jurisdiction
+  overlay held beside the design rather than inside it: the numeric and property
+  requirements expressed in a published machine-readable constraint format, the
+  requirements that have a spatial shape expressed as geometry, and both anchored to
+  element identities that mean the same thing in every market. The design's core geometry
+  and its leasing plans do not change when a jurisdiction is added; the overlay changes.
+  This is the systems half of a two-part argument — a companion paper covers what the
+  shared safety baseline actually contains. Almost none of this is running: the first
+  overlay set is planned as a single illustrative jurisdiction, and the step that would
+  put constraints in front of a designer while they work is intended, not built.
 state: draft
-version: "1.0.0"
+version: "0.1.0"
 published:
-updated: "2026-09-15"
-doi:
+updated: "2026-09-20"
+cite_as:
 license: CC-BY-4.0
 cites:
-  - ifc-4-3
   - ids-1-0
   - bsdd-v1
-  - ifc-fragment-spec
-  - corenet-x-2021
-  - ashrae-90-1
-  - bco-guide-to-specification
-  - well-v2-daylight-modeling
-  - eupl-1-2
+  - ifc-4-3
+  - iso-19650
+  - bca-singapore-corenet
 draws_from:
-  - flat-file-bim-substrate
-  - aec-data-layers
-  - bim-object-specification
-contributors:
-  - name: Peter M. Woodfine
-    roles: [Founding Contributor]
-  - name: Jennifer M. Woodfine
-    roles: [Founding Contributor]
-  - name: Mathew Woodfine
-    roles: [Founding Contributor]
+  - common-building-code
+  - key-plans-and-tiles
+  - fixed-floor-plates
+  - development-regions
+  - geographic-co-location-methodology
+  - city-code-as-composable-geometry
+  - asset-anchored-bim-vault
+  - bim-design-philosophy
+  - open-bim-regulatory-acceptance
+prepared_by: "Woodfine Management Corp."
 keywords:
-  - jurisdiction-portable design
-  - regulatory compliance automation
-  - building data standards
-  - reusable design libraries
-  - site context data
+  - regulatory compliance
+  - multi-jurisdiction development
+  - building information
+  - open standards
+  - expansion cost
 ---
 
-## 1. The question
+> Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
+> any interest in a Woodfine direct-hold solution; any offering is made only by the
+> applicable Private Placement Memorandum. Statements marked "planned," "intended,"
+> "targeted," "may," or "expected" are forward-looking and subject to change. Full
+> disclosures appear at the end of this paper.
 
-An architect who has already designed a compliant emergency stairwell, a functional private
-office, or a well-configured service room on one project starts the next project from a
-blank sheet, even when the new project sits in the same jurisdiction and calls for the exact
-same kind of space — because the compliance conclusion from the first project was never
-recorded as reusable data. It was written up as a prose consultant's report tied to that one
-project, with no structure that would let a future project simply ask "has this design
-already been verified here, or somewhere close enough to matter?" This is not a failure of
-individual practice. It follows directly from how building-code and site-environmental
-information is conventionally packaged — as a project-specific narrative document, not as
-data attached to a reusable design artifact that can travel with that design to the next
-project.
+Working Paper WCP-010 · v0.1.0 · CC BY 4.0
 
-This paper asks a specific, testable question: can the regulatory and environmental facts
-that govern a location be authored exactly once per jurisdiction, and applied automatically
-to any number of reusable designs deployed there — including a practitioner's own personal
-library of past designs, reused independently across an entire career — without editing
-either the design or the jurisdiction's data every time a new pairing occurs?
+A design office entering a new country faces one question before any other: does opening
+here mean redrawing the building, or does it mean adding a record to a table? Our thesis is
+that it should be the second, and that whether a developer can actually answer it that way
+is decided years earlier, by how the compliance information was arranged in the first place.
 
-## 2. What we found
+Our position is that a jurisdiction's local rules should be held as a separate, swappable
+layer of data laid over a design that is itself jurisdiction-agnostic — and never authored
+back into the design. The design carries no country in it. Beside it sits a per-jurisdiction
+overlay: the numeric and property requirements written in a published, machine-readable
+format; the requirements that have a spatial shape written as geometry; and both anchored to
+element identities that mean the same thing everywhere. Registering a new jurisdiction adds
+an overlay. It does not touch the building.
 
-**Separating the reusable design from the place-specific rule set, and computing compliance
-rather than authoring it, removes the re-authoring problem by construction rather than by
-discipline.** A reusable functional-space design stores only jurisdiction-neutral measured
-facts — a clearance distance in meters, not a pass/fail threshold and not a named
-jurisdiction's law. A place-specific overlay, scoped to one jurisdiction or location, holds
-both the pass/fail regulatory rules and separately, the purely informational environmental
-facts — a climate value, a seismic figure, a flood designation — that apply there. The
-compliance result for a given design at a given place is always computed fresh from that
-pairing, never hand-typed and never stored as a standalone conclusion. The same reusable
-design can be simultaneously compliant against one jurisdiction's rules and non-compliant
-against another's, and this is not treated as a contradiction, because the design's own
-definition never changed — only the place it was evaluated against did.
+This is the systems half of a two-part argument, and the halves should not be confused. A
+companion paper on this site argues the content question — what the shared safety baseline
+actually is, and why building once above the strictest safety requirement anywhere absorbs
+nearly all of what a code contains. This paper takes that baseline as given and asks the
+mechanical question that follows: given a narrow local remainder, how is it actually tracked
+and computed without anyone touching the design files? Almost none of the answer is running
+yet, and the section on what is actually built says so plainly.
 
-**The handful of cases where a regulatory difference is a genuine geometry difference — not
-just a different pass/fail threshold — are handled by a substitution mechanism rather than
-by mutating the base design.** A fire door required to be physically wider in one place than
-another is not modeled as a jurisdiction field that changes the base design; instead the
-design defines an open substitution slot, and the specific place being evaluated determines
-which concrete variant fills that slot. Where no compliant variant is yet registered for a
-given place, the system surfaces that gap explicitly rather than silently defaulting to a
-possibly non-compliant choice.
+## 1. The thesis
 
-**The place-specific data a design needs clusters cleanly into exactly four categories, and
-the grouping principle is what each layer measures, not whether it happens to be a law.**
-Most usable place-specific facts are code-referenced somewhere, so sorting them by "is this a
-legal requirement" does not cleanly separate them. Sorting instead by what kind of question
-each layer answers — a legal rule, a return-period extreme event, a long-run climate average,
-or an in-situ physical site property — produces four categories that hold up cleanly:
-regulatory and entitlement rules; hazard and structural-load extremes; climate and energy
-averages; and ground and ecological conditions. Interactions between categories — a seismic
-figure amplified by local soil conditions, a flood designation that is simultaneously a
-physical hazard and a trigger for a separate regulatory requirement — are resolved at
-compliance-computation time, not by duplicating a layer's data into two categories.
+Keeping the design jurisdiction-agnostic, and holding every local rule as data in a
+separate per-jurisdiction overlay, means registering a new market is a matter of adding one
+record rather than editing a design.
 
-**A terminology correction, made explicit rather than quietly folded in, matters for
-credibility with anyone literate in the underlying open standard.** An earlier internal
-description of this architecture's spatial hierarchy — small unit, grouping of units, floor,
-building — described the smallest unit as itself "a building element," conflating the open
-standard's own physical-element hierarchy (walls, doors, furniture) with its separate
-spatial-volume hierarchy (a room, a zone, a storey). The two hierarchies converge only at a
-shared, more abstract level in the standard, and conflating them lower down is a real
-category error we found, corrected, and report explicitly rather than silently fixing.
+The distinction that carries the whole argument is between information that is *in* a thing
+and information that is *about* a thing. A dimension written onto a drawing is in the design:
+change it and you have changed the building. A rule stating that this jurisdiction requires a
+particular clearance is about the design: it can be checked against the design, and it can be
+swapped for a different jurisdiction's rule, without the design moving.
 
-## 3. How we built it
+Almost every developer working across borders ends up with the first arrangement, not because
+anyone chose it but because nobody prevented it. A local requirement is discovered during
+permitting, the drawing is amended to satisfy it, and from that moment the requirement has
+become part of that building's design. It is no longer legible as a local rule. Three markets
+later, nobody can say which features of which drawing set exist because the building needs
+them and which exist because one authority once asked. The design has absorbed its own
+compliance history, and the ability to say "this building, in that market" has been lost.
 
-The architecture defines three deliberately independent record types. A **design** is a
-jurisdiction-agnostic functional-space specification — a reusable room or assembly type —
-storing only jurisdiction-neutral measured facts, never a verdict. A **place overlay** is
-scoped to a jurisdiction or location and holds two kinds of content under one mechanism:
-pass/fail regulatory requirements, each citing its actual source, and purely informational
-environmental facts; both attach to a design or an individual element by classification code
-rather than by editing the target record directly. A **compliance result** is a computed,
-cacheable outcome for one design-and-overlay pairing — never hand-authored, always
-re-derivable from the pairing that produced it.
+Our position is that this absorption is the actual failure, and that everything expensive
+about multi-market expansion follows from it. Keep the two separate and the expansion cost
+behaves differently.
 
-The place-specific data itself is organized under a closed, four-value category schema —
-regulatory and entitlement rules, hazard and structural-load extremes, climate and energy
-averages, and ground and ecology conditions — while the individual data layers within each
-category remain an open, extensible vocabulary. The specific per-country data sources and
-their licensing status are a separate research effort in their own right, referenced here as
-related work rather than re-derived; this paper's own finding is narrower — that the layers
-cluster cleanly into these four categories regardless of which specific national source
-ultimately populates each one.
+## 2. The problem, in the reader's terms
 
-We corrected our own internal spatial-hierarchy terminology against the open building-data
-standard's actual published schema, distinguishing physical elements (a door, a piece of
-furniture) from spatial volumes (a room, a zone, a floor, a building) and distinguishing true
-whole-part decomposition (a floor group made up of smaller units) from mere physical
-containment (furniture located inside a room, not decomposed into it). Both hierarchies
-converge only at a shared, more abstract supertype in the standard — the level at which
-everything is placeable and classifiable — not at the level of an individual physical
-element. A self-similar, fractional grouping mechanism we use for subdividing a floor
-(quarter, half, three-quarter, full) is our own extension layered on top of the standard's
-spatial-grouping concept, not a feature the standard itself defines, and we say so directly
-rather than presenting it as a standard feature.
+Consider a company operating in a dozen tax jurisdictions.
 
-Ownership follows a self-hosted model rather than a centrally hosted account system: a
-practitioner runs their own instance of the underlying open-source platform, with a fully
-private, offline, local-network-only deployment as a first-class supported mode, not a
-degraded fallback. A practitioner's own accumulated design library — potentially hundreds of
-designs spanning an entire career — registers as an extension layered on a shared base
-catalogue, pulling in base-catalogue updates while keeping the practitioner's own designs
-private and under their own governance.
+Nobody runs twelve accounting systems. A competently run company runs one — one chart of
+accounts, one ledger, one set of controls — and holds the jurisdictional differences as
+data within it: a tax table listing the rates, thresholds, filing dates, and treatments that
+apply in each place. When a rate changes, somebody edits a row. When the company enters a
+thirteenth country, somebody adds a row, and the ledger itself is untouched.
 
-## 4. What it changes
+Two properties make this work, and both are worth naming because they transfer directly.
+First, the table is *legible*: anyone can read it and see exactly what is different about
+Poland, in one place, without inferring it from the behaviour of the system. Second, it is
+*swappable*: the accounting system does not care which row is in force, so a new one can be
+added without regression testing the whole ledger.
 
-For a design practice, the practical change is that registering support for a new
-jurisdiction becomes a single new record addition with zero edits to any existing design —
-rather than a re-verification exercise repeated from scratch for every design that might be
-proposed there. This is the architectural property that makes real reuse possible at all:
-the re-authoring problem this paper opened with is closed by how the data is structured, not
-by relying on a practitioner's discipline in keeping records straight across dozens of
-projects and jurisdictions.
+Now picture the same company running the other arrangement — twelve separate accounting
+systems, each incorporating its own jurisdiction's rules into the way it posts entries. Each
+one is correct. None of them is comparable to the others. A change in group policy has to be
+applied twelve times. And no one can produce, on request, a statement of what is actually
+different about Poland, because the difference is distributed through the software rather
+than written down.
 
-It also changes what a practitioner's own accumulated body of work is worth over time. A
-personal library of past designs — a stairwell detail used on an unrelated project years
-earlier, in a different jurisdiction — becomes something a practitioner can locate and
-directly reuse, fully evaluated for compliance at the new location automatically, rather than
-something that exists only as an unindexed archive of old project files.
+That second arrangement is how building compliance is ordinarily handled, and it is what we
+are trying not to do.
 
-## 5. Where this could be wrong
+## 3. How compliance is normally checked
 
-**The four-category schema is validated by internal consistency, not by an outside survey of
-how practitioners actually think about classifying site data.** Whether architects and
-engineers outside this specific effort would independently arrive at the same four
-categories, rather than a different grouping that also happens to be internally coherent, is
-untested.
+The standard architecture for checking a building against a code has been stable for twenty
+years and is worth describing accurately, because our proposal is a departure from it and the
+departure should be judged against a fair account of it.
 
-**The self-hosted library model has not yet been evaluated at the scale its own value
-proposition describes.** The claimed benefit — fast, relevant retrieval from a personal
-library of hundreds of designs spanning a career — has not been measured against a real
-practitioner's library at that scale; it remains a design goal, not a demonstrated result.
+A designer draws the building in whatever authoring software they use. When the design is
+substantially complete it is exported and submitted to a rule-checking service. The service
+applies a ruleset — sometimes a proprietary rule language, sometimes a published constraint
+file, sometimes a script — and produces a report listing violations. A person reads the
+report, returns to the authoring software, corrects the design, and resubmits. The cycle
+repeats until the report is clean.
 
-**The corrected spatial-hierarchy terminology has been checked against the published
-standard's own schema documentation, but not yet reviewed by an outside practitioner fluent
-in that standard.** The correction rests on an internal architectural review, not external
-validation by someone with no stake in the original framing.
+This works, and it is genuinely valuable. It also has a structural property that no amount of
+improvement removes: the check happens after the design is made. The rule-checker sits
+outside the design environment and communicates with it after the fact, which means the cost
+of a violation is proportional to how long it went unnoticed. The more thorough the checking,
+the longer each cycle. Design teams budget weeks for this on complex projects, and the weeks
+are not a tooling defect anyone has failed to fix. They are inherent to checking afterward
+rather than constraining beforehand.
 
-**The specific three-zone floor-planning package this platform uses is our own
-operationalization of a well-established general principle (organizing floor depth from the
-facade inward for daylight, flexibility, and circulation), not itself a citation to existing
-external practice under those specific names.** We state this distinction directly rather
-than implying the specific package is an industry-standard term already in use elsewhere.
+Public authorities have pushed this arrangement about as far as it goes. Singapore's national
+building-submission system accepts models for permit application and runs automated
+code-compliance checking against national requirements, which is, as far as we have been able
+to establish, the most advanced version of this in public production anywhere
+[bca-singapore-corenet]. It remains a checker: models are authored freely, submitted, and
+returned with findings.
 
-## 6. Conclusion
+The arrangement we want sits differently. If the requirement travels *with the element* — so
+that placing a non-compliant configuration is not a thing the design environment lets a
+designer do easily — then the cost of a violation is not weeks of rework. The violation does
+not enter the model. We are careful to say this is an architecture we are building toward
+rather than one we have; the last section is explicit about how far along it is.
 
-The re-authoring problem this paper opened with — an architect rebuilding the same kind of
-space, and re-verifying its compliance from scratch, on every project — is not a discipline
-problem solvable by better habits; it is a direct consequence of packaging code and site data
-as a one-off prose report instead of as structured, reusable data. Separating the reusable
-design from the place-specific overlay, and deriving compliance as a computed result rather
-than authoring it as a stored verdict, removes the problem by construction: a design
-authored once is deployable anywhere, registering a new jurisdiction adds one record and
-edits nothing existing, and the same design carries a different, automatically-derived
-compliance status wherever it is proposed. The architecture is specified and running in a
-real deployment; a full-scale test against a practitioner's actual career-length design
-library — the scenario the whole approach is built to serve — has not yet been run.
+## 4. How the overlay actually works
 
----
+Three pieces, held beside the design rather than inside it. What follows is the intended
+arrangement, described in the present tense because that is how an architecture is most
+clearly explained; the section after it says how much of it exists today, which is not much.
 
-## 7. Claims and what would count against them
+**A stable name for every kind of element.** Before anything else can work, a wall has to mean
+the same thing in Poland as in Mexico. There is a published international dictionary for
+exactly this — a shared reference in which each type of building element has a permanent
+identifier and an agreed definition, independent of any software or any country
+[bsdd-v1]. Every element in the design carries its identifier from that dictionary. That
+identifier is what a jurisdiction's overlay refers to. It is the equivalent of the account
+code in the accounting analogy: the thing both the ledger and the tax table can point at
+without ambiguity.
 
-**Zero-edit onboarding claim.** Registering a new jurisdiction's place overlay requires zero
-edits to any existing design record — only a new overlay record and, where a genuine
-geometric variation exists, a new substitution-slot resolution.
+**The numeric and property requirements, in a published constraint format.** Most of a local
+requirement is expressible as a number or a property: a minimum rating, a maximum
+heat-transfer value, a required clearance, a mandatory characteristic. There is a published
+open standard for writing exactly this kind of requirement in a form software can act on — a
+specification format in which one states what a valid model must contain, element type by
+element type [ids-1-0]. A jurisdiction's overlay includes one of these files. It is a
+document a person can read and a machine can apply, which is the property the accounting
+analogy's tax table has and a rule buried in a drawing does not.
 
-**Terminology-mapping claim.** The corrected spatial-hierarchy model maps every internal
-term to a distinct concept in the published open building-data standard, with no internal
-term mapped to more than one standard concept and no standard concept required to represent
-two different internal terms.
+**The requirements that have a shape, as geometry.** Some requirements cannot be written as a
+number. "This separating wall must be continuous from floor slab to ceiling slab with no
+unprotected penetrations" is a statement about space and adjacency, not about a value. For
+those, the overlay carries geometry: a solid shape, in an open, internationally standardised
+building-data format, defining the volume that must be kept clear or must be filled by
+conforming construction [ifc-4-3]. It attaches to the element and resolves where the element
+is placed.
+A designer sees the required spatial condition while designing rather than after submitting.
 
-| Test | What it checks | Status |
-|---|---|---|
-| Zero-edit jurisdiction onboarding | Authoring a new place overlay for an existing design already deployed elsewhere requires no edit to the design itself | Verified in the current implementation |
-| Simultaneous divergent compliance | The same design can be represented as compliant against one overlay and non-compliant against another without duplicating the design record | Verified in the current implementation |
-| Standard-mapping completeness | Every internal term maps to exactly one distinct concept in the published standard's schema documentation | Checked directly against the published schema; holds for all mapped terms |
-| Practitioner-library scale test | Retrieval speed and relevance for a personal library of 100+ designs spanning multiple jurisdictions, against the same interface used for the shared base catalogue | Not yet run — no practitioner library at this scale has been tested |
+All three sit in a per-jurisdiction folder alongside the building's record — one folder per
+market, each holding that market's dictionary references, its constraint file, and its
+geometry fragments. The folder is the row in the tax table. Adding a market adds a folder.
 
-The zero-edit onboarding claim is falsified if authoring a new overlay is found to require
-editing an existing design record. The terminology-mapping claim is falsified if any
-internal term is found to map to more than one standard concept, or if two internal terms
-are found to require the same standard concept.
+Two consequences follow, and they are the point of the arrangement.
 
-### Appendix A — The four-category schema
+**The design does not change.** The building's core geometry and its leasing plans are
+untouched when a jurisdiction is added. This is not a convention we are undertaking to
+observe; it is a consequence of the rules living somewhere the design files do not reach. The
+overlay changes, the plan does not.
 
-Regulatory and Entitlement (what law requires at this location — pass/fail); Hazards and
-Structural Loads (what extreme event the structure must survive — return-period figures);
-Climate and Energy (long-run environmental averages); Ground and Ecology (what the site
-itself physically contains — measured in-situ properties). Cross-category interactions are
-resolved at compliance-computation time rather than by duplicating a layer into two
-categories.
+**The differences become legible.** Because each market's requirements sit in one readable
+place, it is possible to answer "what is actually different about Italy?" by reading a file,
+rather than by comparing two drawing sets. It also lets the variants be organised sensibly. We expect the
+clusters of genuinely divergent requirements not to follow national borders neatly, so where
+a physical variant of the building is warranted, it is intended to be organised around where
+the codes actually fail to overlap rather than around which country a site sits in.
+
+The programme these overlays serve is nine planned development jurisdictions — Canada, the
+United States, Mexico, Spain, the United Kingdom, Italy, Poland, the Nordics, and New Europe.
+That is a count of places we plan to build, and a reader working through the wider set of
+these papers will meet a different, smaller count elsewhere referring to something else
+entirely: the jurisdictions in which investment vehicles are established. The two numbers
+count different things and should not be reconciled.
+
+## 5. What is actually built
+
+Very little, and this section exists so the previous one is not read as a description of a
+running system.
+
+The element dictionary and the constraint-file standard are real, published, and maintained
+by an international standards body; they are not ours and they are not speculative. The
+building-data format the geometry fragments use is an international standard as well. What we
+are proposing is a particular way of assembling those published pieces, and the assembly is
+at an early stage.
+
+The first overlay set is planned as a single illustrative jurisdiction — one zoning code and
+one climate zone's performance parameters — chosen to prove the shape rather than to cover a
+market. It is a demonstration, not a compliance product, and nothing should be read into the
+choice of jurisdiction. Generating conformant constraint files automatically from the overlay
+data, so that existing rule-checkers can consume them, is intended and not built. And the
+step that would deliver the actual benefit argued for above — constraints reaching a designer's
+authoring software at the moment an element is placed, rather than at submission — is intended
+and further off than the other two.
+
+Until that last step exists, the honest description of what this arrangement buys is narrower
+than the architecture suggests. Today it buys legibility and separation: the local rules are
+written down, in one place, in a machine-readable form, and they are not in the drawings.
+That is worth having on its own and it is not the same as compliance-by-construction. We
+would rather a reader hold us to the narrower claim.
+
+It is also worth stating what does not change under any version of this. A local architect
+still redraws the approved design for the local permit, stamps it, and takes it through the
+authority's process. That is required professional work in every jurisdiction. Nothing here
+removes it, and nothing here should be read as proposing to.
+
+## What this changes for the reader
+
+The change is in what an investor should expect the second, fifth, and ninth market to cost
+relative to the first.
+
+If compliance is authored into the design, every market carries a design cost, and the ninth
+resembles the first. If compliance is a separate data layer, the design is paid for once and
+each further market carries a registration cost and a permit cost — real, but of a different
+order. The difference compounds across a programme, and it is invisible from outside unless
+somebody asks the right question.
+
+The right question is not "do you operate in multiple jurisdictions," which everyone answers
+yes to. It is: can you show me, as a document, what is different about this market — and did
+the building change when you entered it? A developer with a genuine overlay can hand over the
+document. A developer whose compliance is in the drawings will describe a process, because
+there is nothing to hand over.
+
+The trade-offs belong in the same paragraph. The arrangement assumes local requirements are
+mostly *additive* — that a jurisdiction asks for more rather than for something structurally
+incompatible. Where that assumption fails, the overlay cannot express the difference and a
+variant of the building is needed, which is exactly the redesign the arrangement exists to
+avoid. Maintaining overlays is ongoing work that does not appear in a construction budget:
+codes change, and a stale overlay is worse than none because it looks authoritative. And the
+benefit argued for here is largest at the step that is furthest from being built.
+
+## An open invitation
+
+The open questions here belong to people who build software for the built environment and to
+people who administer building regulation, and both would tell us things we cannot work out
+from the inside.
+
+To software and data-architecture specialists working in construction technology: the
+load-bearing assumption is that local requirements are additive deltas over a shared
+baseline. We do not know whether this overlay pattern generalises cleanly to jurisdictions
+with genuinely incompatible base requirements — not stricter, but differently shaped — and we
+have not tested it against one. If there is a known market where the assumption breaks, that
+is the single most useful thing anyone could tell us.
+
+To the maintainers and practitioners of the open constraint and dictionary standards we are
+building on: we are using published standards in a way their guidance does not obviously
+anticipate — as the storage format for a developer's own per-market rule set, rather than as
+a checking specification for a single project. We would like to know whether that use is
+sound, whether it strains the standards in ways a practitioner would immediately see, and
+whether anyone has already done it.
+
+To regulators and code officials publishing requirements: the arrangement described here
+works far better if a jurisdiction's requirements are published in a machine-readable form by
+the jurisdiction itself, rather than transcribed into one by a developer. Transcription is a
+liability — ours, and eventually the authority's, when somebody relies on a transcription that
+has drifted. We would rather consume an authoritative published form than maintain our own,
+and we would participate in work aimed at producing one.
+
+And to anyone maintaining a regulatory data set across many jurisdictions in any industry:
+the maintenance problem — how often overlays are reviewed, on what trigger, by whom, and how
+staleness is detected before somebody relies on it — is not specific to buildings, and other
+fields have solved it better than a developer entering its first markets will.
+
+## Conclusion
+
+One design, many jurisdictions, each expressed as data rather than as a redraw. That is the
+separation this paper argues for: the building carries no country in it, and everything a
+particular country requires sits beside it, readable by a person and actionable by software,
+swappable without the design moving. The benefit is not primarily speed, although speed
+follows. It is that the difference between one market and another stays legible instead of
+dissolving into a drawing set. Today that separation buys us a written, machine-readable
+record of local requirements and the discipline of keeping them out of the design. The
+stronger version — where a non-compliant configuration is simply not something a designer can
+place — is the direction, and it is not yet built.
 
 ## References
 
-buildingSMART International. *Industry Foundation Classes 4.3 — spatial structure and
-element schema.*
+buildingSMART International. *buildingSMART Data Dictionary (bSDD) — classification and
+property definitions.*
+[https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/)
 
-buildingSMART International. Information Delivery Specification (IDS) 1.0.
+buildingSMART International. *Information Delivery Specification (IDS) 1.0.*
+[https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification/](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification/)
 
-buildingSMART International. buildingSMART Data Dictionary (bSDD).
+buildingSMART International. *Industry Foundation Classes (IFC) 4.3 — ISO 16739-1:2024.*
+[https://ifc43-docs.buildingsmart.org/](https://ifc43-docs.buildingsmart.org/)
 
-Singapore Building and Construction Authority. CORENET X e-submission framework.
+Building and Construction Authority, Singapore. *CORENET — regulatory submission for the
+built environment.* [https://www.bca.gov.sg/](https://www.bca.gov.sg/)
 
-ASHRAE. *Standard 90.1 — Energy Standard for Buildings*, perimeter-zone HVAC modeling
-guidance.
-
-British Council for Offices. *Guide to Specification*, daylight/ventilation perimeter-zone
-and services-core-zone guidance.
-
-International WELL Building Institute. *WELL Building Standard v2*, daylight-modeling
-feature.
-
-European Union Publications Office. European Union Public Licence (EUPL) 1.2.
-
----
+International Organization for Standardization. *ISO 19650 — Organization and digitization of
+information about buildings and civil engineering works, including building information
+modelling (BIM).*
+[https://www.iso.org/standard/68078.html](https://www.iso.org/standard/68078.html)
 
 ## Contributors
 
-Peter M. Woodfine, Jennifer M. Woodfine, and Mathew Woodfine are credited as founding
-contributors to Woodfine's building-information-modeling research programme.
+Prepared by Woodfine Management Corp.
 
 ## How this paper was produced
 
-This paper was prepared with AI assistance under human editorial direction; all analytical
-claims and conclusions are the responsibility of the named institutional author.
+AI assistance was used in preparing and revising this paper.
 
 ## Disclosures
 
-The architecture and implementation described are this workspace's own engineering work.
-This paper contains forward-looking statements about a planned practitioner-scale evaluation;
-such statements reflect current intentions and are subject to change without notice.
+Woodfine Capital Projects Inc. ("Woodfine") is the author of record and is the developer and
+promoter of the buildings and the delivery method described in this paper; Woodfine
+Management Corp. employs the staff and retains the consultants who prepare this material and
+perform the work it describes. Woodfine has a direct commercial interest in the approach
+argued for here. This work was funded internally; no external research funding was received.
+Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy, any
+interest in a Woodfine direct-hold solution; any offering is made only by the applicable
+Private Placement Memorandum, which prospective investors should review with their own
+professional advisors. Nothing here is a legal opinion on the building code or permitting
+requirements of any jurisdiction, and nothing here should be relied on in place of advice
+from a qualified local architect, engineer, or code consultant. Some statements above
+describe planned or intended future work; language such as "planned," "intended,"
+"targeted," "may," and "expected" marks this forward-looking content, which is subject to
+change and does not constitute a commitment regarding future performance. Reference to nine
+planned development jurisdictions describes intended programme scope and is not a statement
+that any site has been acquired, optioned, or permitted in any of them.
 
 ## Data and reproducibility
 
-The open standards cited in this paper are publicly available from buildingSMART
-International. The internal design-response document informing the terminology correction in
-§3 is an unpublished primary source authored by this workspace and reported as primary
-authorial testimony, not as an externally verifiable citation. Per-jurisdiction data-layer
-sourcing is documented in a related paper (`aec-data-layers`), cited here as related work
-rather than re-derived.
+The three open standards this arrangement is assembled from — the element dictionary, the
+constraint-specification format, and the building-data format the geometry fragments use —
+are published by an international standards body and are freely readable by anyone. A reader
+who wants to check whether we have characterised them accurately can, and we would encourage
+it, since the accuracy of that characterisation is what most of this paper rests on. The
+international records-management standard referenced is sold rather than given away, which is
+ordinary practice.
+
+What does not exist yet, and therefore cannot be inspected, is our own overlay data. There is
+no published per-jurisdiction rule set to examine, because the first one is planned as a
+single illustrative jurisdiction and is not yet complete. There are no figures here on how
+long registering a jurisdiction takes, what an overlay costs to maintain, or how much of a
+market's requirements a given overlay actually captures, because no such measurement has been
+made and we would rather say so than estimate. The sequence described — design, then shared
+baseline, then local overlay applied at permit stage by a local architect — is the delivery
+method being built, not an observed process with completed buildings behind it. No independent
+party has reviewed this arrangement, tested it against any jurisdiction's requirements, or
+confirmed the claims made for it.
+
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.
