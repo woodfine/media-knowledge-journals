@@ -427,4 +427,4 @@ The structural direction mentioned is a current working conclusion from consulta
 settled specification. No independent party has reviewed this system, tested its claims, or
 confirmed them.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

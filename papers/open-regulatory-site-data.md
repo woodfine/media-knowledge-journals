@@ -495,4 +495,4 @@ that would produce them has not been completed — this is a catalogue of public
 a count of sites. No independent party has audited this assessment, re-read these licences, or
 reviewed these claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

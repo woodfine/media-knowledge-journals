@@ -584,4 +584,4 @@ straight-line measurements, not drive times, except the labour-catchment conditi
 Five, which is stated as a thirty-minute drive. No independent party has audited these
 datasets, reproduced these figures, or reviewed these claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

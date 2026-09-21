@@ -411,4 +411,4 @@ building has been built. We would rather say so than estimate them. No independe
 has reviewed this arrangement, assessed it against the standard named, or confirmed the
 claims made for it.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

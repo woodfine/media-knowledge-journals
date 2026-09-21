@@ -422,4 +422,4 @@ paper's argument, which is why we would rather state its status plainly than let
 established. No independent party has reviewed the baseline specification described here,
 assessed it against any jurisdiction's code, or confirmed the claims made for it.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

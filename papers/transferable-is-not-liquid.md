@@ -476,4 +476,4 @@ change report, earnings release or investor call has occurred. No independent pa
 reviewed this paper's account of the transfer mechanics against the underlying agreement, or
 its account of the disclosure position against the filing record.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

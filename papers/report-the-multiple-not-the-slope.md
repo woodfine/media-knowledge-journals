@@ -439,4 +439,4 @@ and no multiple of capital returned for any vehicle. No independent party has re
 paper's arithmetic, its account of the cited research, or its description of the intended
 reporting package.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

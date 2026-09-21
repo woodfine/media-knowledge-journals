@@ -502,4 +502,4 @@ the design today, "exchange-traded" describes the intended result once an actual
 occurs. No independent party has reviewed the financing model described here, reproduced its
 figures, or verified this paper's description of the governing agreement.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

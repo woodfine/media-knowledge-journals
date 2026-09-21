@@ -506,4 +506,4 @@ alter that layer, which remains unranked and uncurated at its full qualifying co
 grows as new chain data is ingested. No independent party has audited this dataset, reproduced
 these figures, or reviewed these claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

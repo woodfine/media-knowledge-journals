@@ -452,4 +452,4 @@ independent asset manager, and no Woodfine Building has been constructed. No ind
 has reviewed the fee structure described here or verified this paper's description of it
 against the underlying agreement.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

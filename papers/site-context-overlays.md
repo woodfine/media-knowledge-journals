@@ -390,4 +390,4 @@ method being built, not an observed process with completed buildings behind it. 
 party has reviewed this arrangement, tested it against any jurisdiction's requirements, or
 confirmed the claims made for it.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

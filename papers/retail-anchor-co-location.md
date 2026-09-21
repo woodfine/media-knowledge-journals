@@ -602,4 +602,4 @@ so any count in this paper describes one dated processing run and not a permanen
 independent party has audited this dataset, reproduced these results, or reviewed these
 claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

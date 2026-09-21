@@ -766,4 +766,4 @@ geography has been altered. Catchment population and consumer-spend figures are 
 and 178 entries respectively and are reported as absent rather than as zero. No independent party has audited this dataset, reproduced these
 figures, or reviewed these claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

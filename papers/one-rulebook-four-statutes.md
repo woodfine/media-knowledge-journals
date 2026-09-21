@@ -515,4 +515,4 @@ development jurisdictions that appear in this company's development material, an
 number supersedes the other. No independent party has verified this paper's account of the
 Canadian agreement, or its summaries of Spanish, Mexican or United States law.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

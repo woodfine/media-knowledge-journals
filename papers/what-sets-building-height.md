@@ -456,4 +456,4 @@ to weigh our position against the mainstream view should read them rather than o
 characterisation of them. No independent party has reviewed the geometry described here,
 verified the conversion guide, or confirmed the claims made for it.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.

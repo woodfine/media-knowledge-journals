@@ -658,4 +658,4 @@ carry them, including inconsistent use of state and province suffixes; no market
 geography has been altered. No independent party has audited this dataset, reproduced these
 figures, or reviewed these claims.
 
-MCorp™ and Woodfine Capital Projects™ are trademarks of Woodfine Capital Projects Inc.
+Woodfine Capital Projects™ is a trademark of Woodfine Capital Projects Inc.
