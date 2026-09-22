@@ -54,6 +54,10 @@ keywords:
   - development geometry
 ---
 
+# Why Parking Geometry Sets a Building's Height
+
+*The same stall ratio governs a Professional Centre and a Suburban Office; underground parking is what tells them apart*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

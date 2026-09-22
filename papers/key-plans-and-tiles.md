@@ -52,6 +52,10 @@ keywords:
   - office design
 ---
 
+# Key Plans and Tiles, a Self-Similar, Aperiodic Space-Planning System
+
+*Planning a floor from the furniture out, so that whatever is left over is always still worth leasing*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

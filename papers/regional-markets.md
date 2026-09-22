@@ -64,6 +64,10 @@ keywords:
   - site selection
 ---
 
+# What Qualifies a Regional Market
+
+*Reading the validation a national retailer has already paid for, instead of re-deriving it from population*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

@@ -61,6 +61,10 @@ keywords:
   - site assessment
 ---
 
+# How Much Regulatory Site Data Is Actually Open and Usable
+
+*A cell-by-cell coverage scorecard across eight kinds of data and sixteen countries, gaps included*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

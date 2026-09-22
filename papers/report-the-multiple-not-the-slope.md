@@ -56,6 +56,10 @@ keywords:
   - investor disclosure
 ---
 
+# The Multiple, Not the Slope
+
+*A rate of return measures how fast capital came back; the multiple measures how much of it did*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

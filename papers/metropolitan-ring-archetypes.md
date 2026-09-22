@@ -59,6 +59,10 @@ keywords:
   - site classification
 ---
 
+# Two Non-Retail Commercial Archetypes in the Metropolitan Ring
+
+*Why the band around a city holds two different commercial patterns, and what goes wrong when they are read as one*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

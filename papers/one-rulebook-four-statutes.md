@@ -64,6 +64,10 @@ keywords:
   - flow-through vehicles
 ---
 
+# One Rulebook, Four Statutes
+
+*Universal Governing Bylaws across four national vehicles — and the places where the approximation fractures*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

@@ -47,6 +47,10 @@ keywords:
   - property ownership
 ---
 
+# Why Each Building Keeps Its Own Independent Record
+
+*One independently hosted, open-source record server per building, organized toward a published records-management standard*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

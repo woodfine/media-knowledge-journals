@@ -49,6 +49,10 @@ keywords:
   - standardisation
 ---
 
+# The Common Building Code
+
+*Build once above the strictest safety requirement anywhere you operate, and compute only the non-safety remainder per market*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

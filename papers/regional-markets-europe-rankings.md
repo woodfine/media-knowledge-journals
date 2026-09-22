@@ -59,6 +59,10 @@ keywords:
   - site selection
 ---
 
+# The 400 Published Regional Markets in Europe
+
+*The full list across fifteen countries, with the metropolitan reference point and cluster composition for every entry*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

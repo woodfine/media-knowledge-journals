@@ -56,6 +56,10 @@ keywords:
   - capital efficiency
 ---
 
+# Financing the Building From the Lease, Not the Project
+
+*Equity first with no construction loan, then debt sized against income already earned*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

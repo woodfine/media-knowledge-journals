@@ -72,6 +72,10 @@ keywords:
   - commercial real estate
 ---
 
+# Measuring Retail Anchor Co-location From Open Map Data
+
+*Why the convergence of independent retailers is evidence a reader can check, and a forecast is not*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"

@@ -65,6 +65,10 @@ keywords:
   - cease-trade order
 ---
 
+# Transferable Is Not Liquid
+
+*What a public, non-listed unit actually gives its holder — and where this one stands today*
+
 > Nothing in this paper constitutes an offer to sell, or a solicitation of an offer to buy,
 > any interest in a Woodfine direct-hold solution; any offering is made only by the
 > applicable Private Placement Memorandum. Statements marked "planned," "intended,"
